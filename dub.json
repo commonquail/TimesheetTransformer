@@ -1,0 +1,10 @@
+{
+	"name": "TimesheetTransformer",
+	"description": "Naively transform Timesheet CSV exports.",
+	"copyright": "Copyright © 2014, Mikkel Kjeldsen",
+        "license": "MIT",
+        "targetName": "timesheet",
+	"authors": ["Mikkel Kjeldsen"],
+	"dependencies": {
+	}
+}
