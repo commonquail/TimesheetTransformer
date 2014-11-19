@@ -20,6 +20,7 @@ const TimeLog createTimeLog(string filename)
             int day = void;
             int hour = void;
             int minute = void;
+            double breaks_in_decimal = void;
 
             formattedRead(record.date, date_format, &day, &month, &year);
             auto date = Date(year, months[month], day);
@@ -30,7 +31,10 @@ const TimeLog createTimeLog(string filename)
             formattedRead(record.end_time, time_format, &hour, &minute);
             auto end = TimeOfDay(hour, minute);
 
-            auto duration = end - start;
+            formattedRead(record.breaks, break_format, &breaks_in_decimal);
+            auto breaks_in_minutes = dur!"minutes"(
+                cast(long)(breaks_in_decimal * 60));
+            auto duration = end - start - breaks_in_minutes;
 
             log.saveEntry(date, duration);
         }
@@ -109,6 +113,7 @@ struct Layout
     string end_time;
     string absolute_duration;
     string relative_duration;
+    string breaks;
     string project;
     string description;
     string tags;
@@ -131,5 +136,6 @@ enum int[string] months = [
 
 enum date_format = "%d. %s %d";
 enum time_format = "%d:%d";
+enum break_format = "%f";
 
 enum noheader = null;
